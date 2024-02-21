@@ -5,16 +5,59 @@ from typing import Optional
 from fastapi.openapi.utils import get_openapi
 from pydantic import BaseModel
 import json
+import openai
+import os
+from dotenv import load_dotenv
 
 app = FastAPI()
 
-class RecommendationInput(BaseModel):
-    type: str  # Could be 'dessert', 'main_course', 'drink'
-    preferences: Optional[str] = None  # Additional preferences like 'gluten-free'
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
-@app.post("/recommend/")
-async def recommend(input: RecommendationInput):
-    return {"message": f"Recommendation for {input.type} with preferences: {input.preferences}"}
+
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+import openai
+
+app = FastAPI()
+
+openai.api_key = "tu_clave_de_api_aquí"
+
+class RecommendationRequest(BaseModel):
+    description: str
+
+@app.post("/generate-recommendation/")
+async def generate_recommendation(request: RecommendationRequest):
+    try:
+        response = openai.Completion.create(
+            engine="text-davinci-003",  # Asegúrate de utilizar el motor adecuado para tu caso de uso.
+            prompt=f"Genera una recomendación basada en: {request.description}",
+            max_tokens=50
+        )
+        return {"recommendation": response.choices[0].text.strip()}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+import openai
+
+app = FastAPI()
+
+openai.api_key = "tu_clave_de_api_aquí"
+
+class RecommendationRequest(BaseModel):
+    description: str
+
+@app.post("/generate-recommendation/")
+async def generate_recommendation(request: RecommendationRequest):
+    try:
+        response = openai.Completion.create(
+            engine="text-davinci-003",  # Asegúrate de utilizar el motor adecuado para tu caso de uso.
+            prompt=f"Genera una recomendación basada en: {request.description}",
+            max_tokens=50
+        )
+        return {"recommendation": response.choices[0].text.strip()}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/")
 async def root():
