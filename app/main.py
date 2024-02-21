@@ -51,7 +51,7 @@ def generate_ai_response(request: RecommendationRequest):
                 },
                 {
                     "role": "system",
-                    "content": "You are a helpful assistant.",
+                    "content": "You are an intelligent assistant that gives main course, drink and dessert recommendations that go with the user inputed food, drink or general request. if a request is out of this scope, you answer with an apology.",
                 },
             ],
         )
