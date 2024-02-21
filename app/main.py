@@ -17,9 +17,26 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 class RecommendationRequest(BaseModel):
     description: str
+    recommendation_type: str
+    external_api_details: str = None
 
 @app.post("/generate-recommendation/")
 async def generate_recommendation(request: RecommendationRequest):
+    try:
+        if request.recommendation_type == "predetermined":
+            response_content = "Respuesta predeterminada basada en la categoría."
+        elif request.recommendation_type == "ai_generated":
+            response_content = generate_ai_response(request)
+        elif request.recommendation_type == "dynamic":
+            response_content = get_dynamic_response(request.external_api_details)
+        else:
+            raise HTTPException(status_code=400, detail="Tipo de recomendación no válido")
+
+        return {"recommendation": response_content}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+
+def generate_ai_response(request: RecommendationRequest):
     try:
         # Inicializa el cliente de OpenAI con la clave de API
         client = openai.OpenAI(api_key=openai.api_key)
@@ -67,6 +84,12 @@ async def startup_event():
         json.dump(openapi_schema, file)
 
 app.openapi = custom_openapi
+
+def get_dynamic_response(api_details: str):
+    # Esta función debería implementarse para realizar solicitudes a APIs externas
+    # y procesar la respuesta para devolver una recomendación.
+    # Ejemplo de implementación pendiente.
+    return "Respuesta dinámica basada en API externa."
 
 # Monta el directorio 'static' para servir el esquema OpenAPI generado
 app.mount("/static", StaticFiles(directory="static"), name="static")
