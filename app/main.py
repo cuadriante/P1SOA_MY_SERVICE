@@ -39,8 +39,8 @@ async def generate_recommendation(request: RecommendationRequest):
             ],
         )
         
-        # Extrae y devuelve la respuesta generada
-        return {"recommendation": chat_completion.choices[0].message["content"]}
+        response = chat_completion.choices[0].message.content
+        return response
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
