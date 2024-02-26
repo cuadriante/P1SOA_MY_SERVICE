@@ -1,8 +1,8 @@
 # P1SOA_MY_SERVICE
 Servicio web capaz de comunicarse con servicios externos
 
-Para correr FastAPI: 
-uvicorn main:app --reload
+Para correr FastAPI (desde la carpeta base del proyecto): 
+uvicorn app.main:app --reload
 
 para probar recomendaciones de tipo ai_generated:
 

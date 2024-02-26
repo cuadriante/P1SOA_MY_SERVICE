@@ -1,5 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from app.data.JsonDataCollector import JsonDataCollector
+from app.DefaultRecommender.DefaultRecommender import *
 import openai
 import os
 from dotenv import load_dotenv
@@ -16,15 +18,24 @@ app = FastAPI()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 class RecommendationRequest(BaseModel):
+    input: str
+    input_type: str
+    recommendation_of: list
     description: str
     recommendation_type: str
     external_api_details: str = None
 
+json_data_collector = JsonDataCollector()
+default_recommender = DefaultRecommender(json_data_collector)
+
 @app.post("/generate-recommendation/")
 async def generate_recommendation(request: RecommendationRequest):
     try:
-        if request.recommendation_type == "predetermined":
-            response_content = "Respuesta predeterminada basada en la categoría."
+        if request.recommendation_type == "default":
+            response_content = default_recommender.recommend(
+                request.input, 
+                request.input_type, 
+                request.recommendation_of)
         elif request.recommendation_type == "ai_generated":
             response_content = generate_ai_response(request)
         elif request.recommendation_type == "dynamic":
@@ -60,6 +71,7 @@ def generate_ai_response(request: RecommendationRequest):
         return response
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
 
 @app.get("/")
 async def root():
