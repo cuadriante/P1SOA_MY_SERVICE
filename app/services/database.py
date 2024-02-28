@@ -1,26 +1,31 @@
+from models import Meal
+
+from abc import ABC, abstractmethod
 import json
 
-def load_json_file(file_path):
-    with open(file_path, 'r') as file:
-        data = json.load(file)
-    return data
+# json_data_path = 'data/predefined_recom.json'
 
-json_data = load_json_file('data/predefined_sugg.json')
+class IDataSource(ABC):
+    @abstractmethod
+    def get_meal(self, input: str) -> None:
+        pass
 
-def get_recommendations(json_data, main_dish):
-    """
-    Retrieve recommendations based on the main dish.
-    Args:
-        json_data (dict): The JSON dictionary containing main dish keys and recommendation values.
-        main_dish (str): The main dish to retrieve recommendations for.
-    Returns:
-        A list of recommendations for the specified main dish, or None if the main dish is not found.
-    """
-    main_dish_lower = main_dish.lower()
-    for dish_key in json_data:
-        if dish_key.lower() == main_dish_lower:
-            return json_data[dish_key]
-    return None
+class JsonDataSource(IDataSource):
+    def __init__(self, datafile_path=None):
+        self.meals = []
+        if datafile_path:
+            self.__load_data(datafile_path)
 
-def get_predefined_suggestion(entry: str) -> str:
-    return get_recommendations(json_data, entry)
+    def __load_data(self, datafile_path):
+        self.meals = json.load(open(datafile_path))
+
+
+    def get_meal(self, input : str):
+        for meal in self.meals:
+            for food_type, food in meal.items():
+                if input.lower() == food.lower():
+                    return self.__dict_to_meal(meal)
+        return Meal()
+            
+    def __dict_to_meal(self, meal_dict):
+        return Meal(**meal_dict)

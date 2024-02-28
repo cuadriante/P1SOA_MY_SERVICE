@@ -28,7 +28,7 @@ def custom_openapi():
 async def startup_event():
     openapi_schema = custom_openapi()
     # Asegúrate de que el directorio 'static' exista en tu proyecto
-    with open('static/openapi.json', 'w') as file:
+    with open('../static/openapi.json', 'w') as file:
         json.dump(openapi_schema, file)
 
 app.openapi = custom_openapi

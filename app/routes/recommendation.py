@@ -7,7 +7,7 @@ router = APIRouter()
 @router.post("/gen-recommendation/")
 async def generate_recommendation(request: RecommendationRequest):
     try:
-        response = process_recommendation_req(request.description, request.src)
+        response = process_recommendation_req(request.input, request.recommendation_of, request.src)
         return response
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
