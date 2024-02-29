@@ -3,7 +3,10 @@ from models import Meal
 from abc import ABC, abstractmethod
 import json
 
-# json_data_path = 'data/predefined_recom.json'
+JSON_DATA_PATH = '../data/predefined_recom.json'
+
+def init_data_source():
+    return JsonDataSource(JSON_DATA_PATH)
 
 class IDataSource(ABC):
     @abstractmethod

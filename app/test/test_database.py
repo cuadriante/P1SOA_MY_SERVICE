@@ -1,6 +1,6 @@
 import unittest
-from app.models import Meal
-from app.services.database import JsonDataSource
+from models import Meal
+from services.database import JsonDataSource
 
 json_data = [
     {

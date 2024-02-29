@@ -1,6 +1,10 @@
 from models import Meal
 from .database import IDataSource
 
+
+def init_default_recommender(data_source: IDataSource):
+    return PredefinedRecommender(data_source)
+
 class PredefinedRecommender:
     def __init__(self, data_source: IDataSource):
         self.data_source = data_source
