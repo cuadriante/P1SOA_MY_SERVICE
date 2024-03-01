@@ -1,4 +1,6 @@
 from fastapi import HTTPException
+
+from models import Meal
 from .predefined_recom import init_default_recommender
 from .database import init_data_source
 from .openAIapi import get_OpenAI_suggestion
@@ -8,20 +10,20 @@ data_source = init_data_source()
 predefined_recommender = init_default_recommender(data_source)
 
 
-def process_recommendation_req(entry: str, recomendation_of: list[str] , src: str) -> str:
+def process_recommendation_req(meal: Meal, recomendation_of: list[str] , src: str) -> str:
     # Validar el contenido del request
     validate_request_src(src)
     if src.upper() == "OPENAI":
-        response = get_OpenAI_suggestion(entry, recomendation_of)
+        response = get_OpenAI_suggestion(meal, recomendation_of)
     elif src.upper() == "LOCALDB":
-        response = process_predefined_recom(entry, recomendation_of, src)
+        response = process_predefined_recom(meal, recomendation_of)
     elif src.upper() == "EXTERNAL":
         response = "WIP"
     return response
 
-def process_predefined_recom(entry: str, recomendation_of: list[str]) -> str:
+def process_predefined_recom(meal: Meal, recomendation_of: list[str]) -> str:
     try:
-        response = predefined_recommender.recommend(entry, recomendation_of)
+        response = predefined_recommender.recommend(meal, recomendation_of)
         return response
     except Exception as e:
         raise HTTPException(status_code=400, detail=e.args) from e

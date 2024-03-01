@@ -1,18 +1,18 @@
 [
     {
-        "main_dish": "pizza",
-        "drink": "coke",
-        "dessert": "ice cream"
+        "main_dish" : "pizza",
+        "drink" : "coke",
+        "dessert" : "ice cream"
     },
     {
-        "main_dish":"salad",
-        "drink":"smoothie",
-        "dessert":"watermelon"
+        "main_dish" : "salad",
+        "drink" : "smoothie",
+        "dessert" : "watermelon"
     },
     {
-        "main_dish":"sandwich",
-        "drink":"water",
-        "dessert":"cake"
+        "main_dish" : "chicken",
+        "drink" : "water",
+        "dessert" : "apple"
+    
     }
-
 ]
