@@ -1,53 +1,18 @@
 [
     {
-        "food" : "pizza",
-        "menu" : {
-            "main_dish" : "pizza",
-            "drink" : "coke",
-            "dessert" : "ice cream"
-        }
+        "main_dish" : "pizza",
+        "drink" : "coke",
+        "dessert" : "ice cream"
     },
     {
-        "food" : "salad",
-        "menu" : {
-            "main_dish" : "salad",
-            "drink" : "smoothie",
-            "dessert" : "watermelon"
-        }
+        "main_dish" : "salad",
+        "drink" : "smoothie",
+        "dessert" : "watermelon"
     },
     {
-        "food": "wine",
-        "menu" : {
-            "main_dish" : "pasta",
-            "drink" : "wine",
-            "dessert" : "tiramisu"
-        }
-    },
-    {
-        "food": "water",
-        "menu" : {
-            "main_dish" : "chicken",
-            "drink" : "water",
-            "dessert" : "apple"
-        }
-
-    },
-    {
-        "food": "tiramisu",
-        "menu" : {
-            "main_dish" : "pasta",
-            "drink" : "wine",
-            "dessert" : "tiramisu"
-        }
-    },
-    {
-        "food": "apple",
-        "menu" : {
-            "main_dish" : "chicken",
-            "drink" : "water",
-            "dessert" : "apple"
-        }
+        "main_dish" : "chicken",
+        "drink" : "water",
+        "dessert" : "apple"
+    
     }
-
-
 ]

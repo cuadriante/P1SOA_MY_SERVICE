@@ -4,30 +4,21 @@ from services.database import JsonDataSource
 
 json_data = [
     {
-        "food" : "pizza",
-        "menu" : {
-            "main_dish" : "pizza",
-            "drink" : "coke",
-            "dessert" : "ice cream"
-        }
+        "main_dish" : "pizza",
+        "drink" : "coke",
+        "dessert" : "ice cream"
     },
     {
-        "food" : "salad",
-        "menu" : {
-            "main_dish" : "salad",
-            "drink" : "smoothie",
-            "dessert" : "watermelon"
-        }
+        "main_dish" : "salad",
+        "drink" : "smoothie",
+        "dessert" : "watermelon"
     },
     {
-        "food" : "sandwich",
-        "menu" : {
-            "main_dish" : "sandwich",
-            "drink" : "water",
-            "dessert" : "cake"
-        }
+        "main_dish" : "chicken",
+        "drink" : "water",
+        "dessert" : "apple"
+    
     }
-
 ]
 
 
@@ -39,7 +30,7 @@ class TestJsonDataSource(unittest.TestCase):
 
         result = data_collector.get_meal(input)
 
-        meal = Meal(main_dish="pizza", drink="coke", dessert="ice cream")
+        meal = {"main_dish":"pizza", "drink":"coke", "dessert":"ice cream"}
         self.assertEqual(result, meal)
 
     def test_get_input_not_found_expected_none(self):
@@ -49,4 +40,4 @@ class TestJsonDataSource(unittest.TestCase):
 
         result = data_collector.get_meal(input)
 
-        self.assertEqual(result, Meal())
+        self.assertEqual(result, {"main_dish":"", "drink":"", "dessert":""})
