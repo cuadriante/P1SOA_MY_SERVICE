@@ -14,7 +14,7 @@ def process_recommendation_req(entry: str, recomendation_of: list[str] , src: st
     if src.upper() == "OPENAI":
         response = get_OpenAI_suggestion(entry, recomendation_of)
     elif src.upper() == "LOCALDB":
-        response = process_predefined_recom(entry, recomendation_of, src)
+        response = process_predefined_recom(entry, recomendation_of)
     elif src.upper() == "EXTERNAL":
         response = "WIP"
     return response

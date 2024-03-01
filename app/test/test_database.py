@@ -4,19 +4,28 @@ from services.database import JsonDataSource
 
 json_data = [
     {
-        "main_dish": "pizza",
-        "drink": "coke",
-        "dessert": "ice cream"
+        "food" : "pizza",
+        "menu" : {
+            "main_dish" : "pizza",
+            "drink" : "coke",
+            "dessert" : "ice cream"
+        }
     },
     {
-        "main_dish":"salad",
-        "drink":"smoothie",
-        "dessert":"watermelon"
+        "food" : "salad",
+        "menu" : {
+            "main_dish" : "salad",
+            "drink" : "smoothie",
+            "dessert" : "watermelon"
+        }
     },
     {
-        "main_dish":"sandwich",
-        "drink":"water",
-        "dessert":"cake"
+        "food" : "sandwich",
+        "menu" : {
+            "main_dish" : "sandwich",
+            "drink" : "water",
+            "dessert" : "cake"
+        }
     }
 
 ]

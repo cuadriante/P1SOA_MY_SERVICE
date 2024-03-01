@@ -21,13 +21,11 @@ class JsonDataSource(IDataSource):
 
     def __load_data(self, datafile_path):
         self.meals = json.load(open(datafile_path))
-
-
+        
     def get_meal(self, input : str):
         for meal in self.meals:
-            for food_type, food in meal.items():
-                if input.lower() == food.lower():
-                    return self.__dict_to_meal(meal)
+            if input.lower() == meal["food"].lower():
+                return self.__dict_to_meal(meal["menu"])
         return Meal()
             
     def __dict_to_meal(self, meal_dict):

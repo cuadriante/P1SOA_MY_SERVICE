@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 class RecommendationRequest(BaseModel):
-    input : str
+    input : list[str]
     recommendation_of : list[str]
     src : str
 
