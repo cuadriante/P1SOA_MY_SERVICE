@@ -24,3 +24,9 @@ class RecommendationRequest(BaseModel):
     meal : Meal
     recommendation_of : List[RecommendationType]
     src : SourceType
+
+
+class ExternalRequest(BaseModel):
+    meal : Meal
+    recommendation_of : List[RecommendationType]
+    src : SourceType

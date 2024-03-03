@@ -3,6 +3,7 @@ from fastapi import HTTPException
 from models import Meal
 from .predefined_recom import get_predefined_recom
 from .openAIapi import get_OpenAI_suggestion
+from .external_recom import get_external_recom
 
 
 def process_recommendation_req(meal: Meal, recomendation_of: list[str] , src: str) -> str:
@@ -13,7 +14,7 @@ def process_recommendation_req(meal: Meal, recomendation_of: list[str] , src: st
     elif src.upper() == "LOCALDB":
         response = get_predefined_recom(meal, recomendation_of)
     elif src.upper() == "EXTERNAL":
-        response = "WIP"
+        response = get_external_recom(meal,recomendation_of)
     return response
         
 def validate_request_src(req_source):

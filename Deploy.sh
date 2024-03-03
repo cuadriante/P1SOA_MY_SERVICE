@@ -7,7 +7,7 @@ export PATH="$PATH:/home/ubuntu/.local/bin"
 export OPENAI_API_KEY=$OPENAI_API_KEY
 sudo apt-get update
 sudo apt install -y python3-pip nginx
-pip install fastapi uvicorn python-dotenv openai
+pip install fastapi uvicorn python-dotenv openai requests
 cd SOA
 sudo cp recommendation_nginx /etc/nginx/sites-enabled/
 sudo service nginx restart
