@@ -21,3 +21,11 @@ def validate_request_src(req_source):
         raise HTTPException(status_code=400, detail="The source was not supplied") 
     if req_source.upper() not in ["OPENAI", "LOCALDB", "EXTERNAL"]:
         raise HTTPException(status_code=400, detail="The introduced source is not found") 
+    
+def validate_meal(meal):
+    if not meal or not isinstance(meal, Meal):
+        raise HTTPException(status_code=400, detail="Invalid meal data provided")
+
+def validate_recommendation_of(recommendation_of):
+    if not recommendation_of or not isinstance(recommendation_of, list) or not all(isinstance(item, str) for item in recommendation_of):
+        raise HTTPException(status_code=400, detail="Invalid recommendation_of data provided")
