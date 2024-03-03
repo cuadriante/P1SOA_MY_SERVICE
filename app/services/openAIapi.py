@@ -9,8 +9,34 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 # Inicializa el cliente de OpenAI con la clave de API
 client = openai.OpenAI(api_key=openai.api_key)
 
-def get_OpenAI_suggestion(entry: str) -> str:
-        # Realiza la solicitud de completion de chat
+# Suponiendo que RecommendationType es una enumeración o similar
+# Puedes ajustar los valores según lo que realmente contenga RecommendationType
+recommendation_type_mapping = {
+    "main_dish": "a main dish",
+    "drink": "a drink",
+    "dessert": "a dessert",
+}
+
+def get_OpenAI_suggestion(meal, recommendation_of) -> str:
+    # Construye la parte de la entrada relacionada con las recomendaciones
+    recommendations = ', '.join([recommendation_type_mapping[rec] for rec in recommendation_of])
+
+    # Construye la parte de la entrada relacionada con la comida, incluyendo solo los componentes presentes
+    meal_components = []
+    if meal.main_dish:
+        meal_components.append(f"main dish {meal.main_dish}")
+    if meal.drink:
+        meal_components.append(f"drink {meal.drink}")
+    if meal.dessert:
+        meal_components.append(f"dessert {meal.dessert}")
+
+    meal_description = ', '.join(meal_components)
+
+    # Crea la entrada combinando las recomendaciones con los detalles de la comida
+    entry = f"I want a recommendation of {recommendations} that goes with {meal_description}"
+    print("entry: ", entry)
+
+    # Realiza la solicitud de completion de chat
     chat_completion = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
@@ -20,9 +46,24 @@ def get_OpenAI_suggestion(entry: str) -> str:
             },
             {
                 "role": "system",
-                "content": "You are a helpful assistant.",
+                "content": "You are an intelligent assistant that gives general main course, drink and dessert recommendations that go with the user inputed food, drink or dessert. Only give the user a recommendation of what they asked to be recommended. give the answer in this format: main_dish: result, drink: result, dessert: result. if the user does NOT ask for a certain type of recommendation, return None for that particular recommendation that was not asked, keep the format that i mentioned ALWAYS. if a request is out of this scope, return None for each category.",
             },
         ],
     )
     
-    return chat_completion.choices[0].message.content
+    response_content = chat_completion.choices[0].message.content
+
+    print(response_content)
+    # Aquí necesitas procesar la respuesta para extraer main_dish, drink y dessert
+    # Esto es un ejemplo de cómo podrías hacerlo:
+    response = {
+        "main_dish": None,
+        "drink": None,
+        "dessert": None
+    }
+    # Supongamos que la respuesta sigue el formato "main_dish: result, drink: result, dessert: result"
+    for line in response_content.split(', '):
+        key, value = line.split(': ')
+        response[key.strip()] = value.strip()  if value.strip() != "None" else ""
+
+    return response
