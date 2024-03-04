@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from enum import Enum
-from typing import List
+from typing import List, Optional
 
 # Define an Enum to specify the allowed recommendation types
 class RecommendationType(str, Enum):
@@ -16,9 +16,9 @@ class SourceType(str, Enum):
     
     
 class Meal(BaseModel):
-    main_dish : str = ""
-    drink: str = ""
-    dessert: str = ""
+    main_dish: Optional[str] = Field(default=None, example="Pasta")
+    drink: Optional[str] = Field(default=None, example="")
+    dessert: Optional[str] = Field(default=None, example="")
 
 class RecommendationRequest(BaseModel):
     meal : Meal = Field(..., example={
@@ -27,4 +27,4 @@ class RecommendationRequest(BaseModel):
         "dessert": ""
     })
     recommendation_of : List[RecommendationType] = Field(..., example=["drink", "dessert"])
-    src : SourceType = Field
+    src : SourceType = Field(..., example="openai")

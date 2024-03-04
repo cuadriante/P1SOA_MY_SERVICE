@@ -20,7 +20,7 @@ recommendation_type_mapping = {
 
 def get_OpenAI_suggestion(meal, recommendation_of) -> str:
     # Construye la parte de la entrada relacionada con las recomendaciones
-    recommendations = ', '.join([recommendation_type_mapping[rec] for rec in recommendation_of])
+    recommendations = ', and '.join([recommendation_type_mapping[rec] for rec in recommendation_of])
 
     # Construye la parte de la entrada relacionada con la comida, incluyendo solo los componentes presentes
     meal_components = []
@@ -48,16 +48,16 @@ def get_OpenAI_suggestion(meal, recommendation_of) -> str:
             {
                 "role": "system",
                 "content": "You are an intelligent assistant that gives general main course, "
-                           "drink and dessert recommendations that go with the user inputed food, "
-                           "drink or dessert. Only give the user a recommendation of what they "
-                           "asked to be recommended. give the answer in this format: "
-                           "main_dish: result, drink: result, dessert: result. if the user does NOT "
-                           "ask for a certain type of recommendation, return None for that particular "
-                           "recommendation that was not asked. NEVER reccomend something that is not "
+                            "drink and dessert recommendations that go with the user inputed food, "
+                            "drink or dessert. Only give the user a recommendation of what they "
+                            "asked to be recommended. give the answer in this format: "
+                            "main_dish: result, drink: result, dessert: result. if the user does NOT "
+                            "ask for a certain type of recommendation, return None for that particular "
+                            "recommendation that was not asked. NEVER reccomend something that is not "
                             " part of what the user wants to be recommended (instead return None for that category) " 
                             "keep the format that i mentioned ALWAYS. "
-                           "if a request is out of this scope, return "
-                           "None for each category."},
+                            "if a request is out of this scope, return "
+                            "None for each category."},
         ],
     )
     
