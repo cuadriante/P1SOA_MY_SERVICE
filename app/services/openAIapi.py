@@ -1,6 +1,7 @@
 import openai
 import os
 from dotenv import load_dotenv
+from fastapi import HTTPException
 
 # Carga las variables de entorno desde un archivo .env en el directorio actual
 load_dotenv()
@@ -70,12 +71,16 @@ def get_OpenAI_suggestion(meal, recommendation_of) -> str:
         "drink": None,
         "dessert": None
     }
-    # Supongamos que la respuesta sigue el formato "main_dish: result, drink: result, dessert: result"
-    for line in response_content.split(', '):
-        if ': ' in line:
-            key, value = line.split(': ')
-            if key.strip() in response:  # Asegura que la clave es válida
-                response[key.strip()] = value.strip() if value.strip() != "None" else ""
-        else:
-            print(f"Skipping invalid line: {line}")
+    try:
+            for line in response_content.split(', '):
+                if ': ' in line:  # Verifica si el formato clave: valor está presente
+                    key, value = line.split(': ')
+                    if key.strip() in response:
+                        response[key.strip()] = value.strip() if value.strip() != "None" else ""
+                else:
+                    # Si no se encuentra el formato clave: valor, lanza una excepción
+                    raise ValueError("Invalid format in OpenAI response")
+    except ValueError as e:
+            # Aquí capturas la excepción y lanzas un error HTTP
+        raise HTTPException(status_code=502, detail="OpenAI service encountered an issue, please try again.") from e
     return response
