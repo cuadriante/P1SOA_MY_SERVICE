@@ -12,6 +12,7 @@ app.include_router(recommendation.router)
 async def root():
     return {"message": "Welcome to the recommendation service"}
 
+
 def custom_openapi():
     if app.openapi_schema:
         return app.openapi_schema
@@ -34,6 +35,8 @@ async def startup_event():
 app.openapi = custom_openapi
 # Monta el directorio 'static' para servir el esquema OpenAPI generado
 #app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
 
 if __name__ == "__main__":
     import uvicorn

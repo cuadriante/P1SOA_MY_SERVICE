@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from enum import Enum
 from typing import List
 
@@ -21,6 +21,10 @@ class Meal(BaseModel):
     dessert: str = ""
 
 class RecommendationRequest(BaseModel):
-    meal : Meal
-    recommendation_of : List[RecommendationType]
-    src : SourceType
+    meal : Meal = Field(..., example={
+        "main_dish": "Pasta",
+        "drink": "",
+        "dessert": ""
+    })
+    recommendation_of : List[RecommendationType] = Field(..., example=["drink", "dessert"])
+    src : SourceType = Field
