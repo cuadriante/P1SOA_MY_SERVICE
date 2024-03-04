@@ -26,7 +26,9 @@ class RecommendationRequest(BaseModel):
     src : SourceType
 
 
-class ExternalRequest(BaseModel):
-    meal : Meal
-    recommendation_of : List[RecommendationType]
-    src : SourceType
+class externalObject:
+    def __init__(self,meal,drink,dessert):
+        self.meal=meal
+        self.drink=drink
+        self.dessert=dessert
+
