@@ -28,3 +28,11 @@ class RecommendationRequest(BaseModel):
     })
     recommendation_of : List[RecommendationType] = Field(..., example=["drink", "dessert"])
     src : SourceType = Field(..., example="openai")
+
+
+class externalObject:
+    def __init__(self,meal,drink,dessert):
+        self.meal=meal
+        self.drink=drink
+        self.dessert=dessert
+
