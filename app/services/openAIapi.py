@@ -72,15 +72,21 @@ def get_OpenAI_suggestion(meal, recommendation_of) -> str:
         "dessert": None
     }
     try:
-            for line in response_content.split(', '):
-                if ': ' in line:  # Verifica si el formato clave: valor está presente
-                    key, value = line.split(': ')
-                    if key.strip() in response:
-                        response[key.strip()] = value.strip() if value.strip() != "None" else ""
-                else:
-                    # Si no se encuentra el formato clave: valor, lanza una excepción
-                    raise ValueError("Invalid format in OpenAI response")
+        # Dividir la cadena en partes basadas en ', '
+        parts = response_content.split(', ')
+        for part in parts:
+            # Dividir cada parte en clave y valor basado en ': '
+            if ': ' in part:
+                key, value = part.split(': ', 1)  # El segundo argumento asegura que la división se aplique solo en la primera instancia de ': '
+                key = key.strip()
+                value = value.strip()
+                # Asignar el valor al diccionario si la clave es válida
+                if key in response:
+                    response[key] = value if value.lower() != "none" else None
+            else:
+                raise ValueError("Invalid format in response content")
     except ValueError as e:
-            # Aquí capturas la excepción y lanzas un error HTTP
-        raise HTTPException(status_code=502, detail="OpenAI service encountered an issue, please try again.") from e
+        # Manejar la excepción y lanzar un error HTTP si es necesario
+        raise HTTPException(status_code=502, detail="Invalid format in response content.") from e
+
     return response

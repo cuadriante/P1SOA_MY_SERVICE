@@ -1,1 +1,2 @@
 pip install fastapi uvicorn python-dotenv openai
+pip install requests
