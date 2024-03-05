@@ -13,10 +13,8 @@ def get_external_recom(meal: Meal, recomendation_of: list[str]) -> str:
         response_dict_external=external_response.json()
         return map_external_to_internal(response_dict_external,recomendation_of)
     except:
-        try:
-            raise HTTPException(status_code=external_response.status_code, detail=external_response.reason) 
-        except:
-            raise HTTPException(status_code=503, detail="Service Unavailable") 
+        raise HTTPException(status_code=external_response.status_code, detail=external_response.reason) 
+        
             
 
 def class_to_dict(obj):
